@@ -3,7 +3,9 @@ package cn.sc.pai.test.login;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
+import butterknife.BindView;
 import butterknife.OnClick;
 import cn.pai.mvp.view.PaiActivity;
 import cn.sc.pai.test.R;
@@ -17,6 +19,10 @@ import cn.sc.pai.test.R;
 public class LoginActivity extends PaiActivity<LoginContract.View, LoginContract.Presenter>
         implements LoginContract.View {
 
+    @BindView(R.id.etUserName)
+    EditText etUserName;
+    @BindView(R.id.etUserPwd)
+    EditText etUserPwd;
 
     @Override
     protected int layoutId() {
@@ -40,11 +46,11 @@ public class LoginActivity extends PaiActivity<LoginContract.View, LoginContract
 
     @Override
     public String getUser() {
-        return null;
+        return etUserName.getText().toString();
     }
 
     @Override
     public String getPwd() {
-        return null;
+        return etUserPwd.getText().toString();
     }
 }
