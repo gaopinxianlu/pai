@@ -33,12 +33,14 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    //design
+    implementation 'com.google.android.material:material:1.0.0'
     //butterknife
-    implementation 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     //网络框架
-    api 'com.squareup.okhttp3:okhttp:3.2.0'
-    api 'com.squareup.okio:okio:1.7.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.13.1'
+    implementation 'com.squareup.okio:okio:1.17.2'
     //阿里json
-    api 'com.alibaba:fastjson:1.2.35'
+    implementation 'com.alibaba:fastjson:1.2.35'
 }

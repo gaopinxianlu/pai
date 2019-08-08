@@ -1,7 +1,8 @@
 package cn.pai.common.adapter;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
  * author：pany
  * on 2018/5/13 10:50
  */
-public abstract class CommRecyAdapter<D> extends RecyclerView.Adapter<ViewHolder> implements IAdapter<D> {
+public abstract class CommRecyAdapter<D> extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements IAdapter<D> {
 
     protected List<D> datas;
     private CommRecyAdapter.OnAdapterListener<D> onAdapterListener;
@@ -96,7 +97,7 @@ public abstract class CommRecyAdapter<D> extends RecyclerView.Adapter<ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         if (onAdapterListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -137,7 +138,7 @@ public abstract class CommRecyAdapter<D> extends RecyclerView.Adapter<ViewHolder
      * @param position
      * @param data
      */
-    public abstract void convert(ViewHolder holder, int position, D data);
+    public abstract void convert(RecyclerView.ViewHolder holder, int position, D data);
 
     /**
      * 点击事件监听

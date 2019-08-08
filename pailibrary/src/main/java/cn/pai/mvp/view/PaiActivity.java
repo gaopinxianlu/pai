@@ -8,10 +8,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import cn.pai.common.listener.OnPromptListener;
 import cn.pai.mvp.presenter.IPresenter;

@@ -3,11 +3,11 @@ package cn.pai.mvp.view;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import butterknife.ButterKnife;
 import cn.pai.common.log.Loger;
@@ -56,7 +56,7 @@ public abstract class MvpFragment<V extends IView, P extends IPresenter<V>>
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Loger.p("frag-onCreate");
         presenter = bindPresenter();        // 绑定presenter
@@ -68,9 +68,8 @@ public abstract class MvpFragment<V extends IView, P extends IPresenter<V>>
         }
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         contentView = inflater.inflate(layoutId(), container, false);
         return contentView;
     }
@@ -81,7 +80,7 @@ public abstract class MvpFragment<V extends IView, P extends IPresenter<V>>
     protected abstract int layoutId();
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Loger.p("frag-onViewCreated");
         ButterKnife.bind(this, contentView);// 注解绑定控件
@@ -89,7 +88,7 @@ public abstract class MvpFragment<V extends IView, P extends IPresenter<V>>
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Loger.p("frag-onActivityCreated");
         if (presenter != null) {
