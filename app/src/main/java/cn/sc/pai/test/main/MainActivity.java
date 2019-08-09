@@ -15,7 +15,7 @@ public class MainActivity extends PaiActivity<MainContract.View, MainContract.Pr
 
     @Override
     protected MainContract.Presenter bindPresenter() {
-        return null;
+        return new MainPresenter();
     }
 
     @Override

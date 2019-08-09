@@ -1,5 +1,6 @@
 package cn.sc.pai.test.login;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 
@@ -26,10 +27,15 @@ public class LoginPresenter extends PaiPresenter<LoginContract.View> implements 
      */
     @Override
     public void reqLogin() {
+        String userName = view.getUser();
+        String userPwd = view.getPwd();
         view.loading("登录中...");
         handler.postDelayed(() -> {
             view.loaded();
-            view.toActivity(MainActivity.class,null);
+            Bundle bundle = new Bundle();
+            bundle.putString("UserName",userName);
+            bundle.putString("UserPwd",userPwd);
+            view.toActivity(MainActivity.class,bundle);
         },1000);
     }
 }
