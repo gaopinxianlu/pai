@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog;
 import com.google.android.material.snackbar.Snackbar;
 
 import cn.pai.common.listener.OnPromptListener;
+import cn.pai.mvp.app.ActivityStack;
 import cn.pai.mvp.presenter.IPresenter;
 
 /**
@@ -36,8 +37,19 @@ public abstract class PaiActivity<V extends IView, P extends IPresenter<V>>
     private ProgressDialog loadDialog;
 
     @Override
+    protected void layoutPre(Bundle savedInstanceState) {
+        super.layoutPre(savedInstanceState);
+        ActivityStack.getInstance().add(this);
+    }
+
+    @Override
     public Activity getActivity() {
         return this;
+    }
+
+    @Override
+    public Activity getActivity(Class<?> cls) {
+        return ActivityStack.getInstance().getActivity(cls);
     }
 
     @Override
@@ -166,13 +178,25 @@ public abstract class PaiActivity<V extends IView, P extends IPresenter<V>>
     public void finish() {
         // TODO Auto-generated method stub
         super.finish();
+        ActivityStack.getInstance().remove(this);
         loaded();
         prompted();
     }
 
     @Override
+    public void finish(Class<?> cls) {
+        ActivityStack.getInstance().finishActivity(cls);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityStack.getInstance().remove(this);
+    }
+
+    @Override
     public void quit() {
-        finish();
+        ActivityStack.getInstance().exit();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package cn.pai.mvp.view;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,6 +10,7 @@ import android.content.ServiceConnection;
 import android.os.Bundle;
 
 import cn.pai.common.listener.OnPromptListener;
+import cn.pai.mvp.app.ActivityStack;
 import cn.pai.mvp.presenter.IPresenter;
 
 /**
@@ -23,6 +25,11 @@ public abstract class PaiFragment<V extends IView, P extends IPresenter<V>>
      * 承载fragment的activity
      */
     protected IView activityView;
+
+    @Override
+    public Activity getActivity(Class<?> cls) {
+        return ActivityStack.getInstance().getActivity(cls);
+    }
 
     @Override
     public Bundle getBundle() {
@@ -158,8 +165,13 @@ public abstract class PaiFragment<V extends IView, P extends IPresenter<V>>
     }
 
     @Override
+    public void finish(Class<?> cls) {
+        ActivityStack.getInstance().finishActivity(cls);
+    }
+
+    @Override
     public void quit() {
-        finish();
+        ActivityStack.getInstance().exit();
     }
 
     @Override
