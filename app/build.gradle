@@ -35,5 +35,5 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
     //pai
-    implementation 'com.github.gaopinxianlu:pai:1.0.1'
+    implementation 'com.github.gaopinxianlu:pai:1.0.3'
 }
