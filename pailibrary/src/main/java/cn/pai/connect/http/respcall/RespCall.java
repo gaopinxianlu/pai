@@ -45,15 +45,35 @@ public abstract class RespCall<T> implements Callback {
         } else {
             Loger.d("---------------okhttp end---------------------");
             response.body().close();// 关闭
-            deliverFailure(null, "网络异常(" + response.code() + ")," + response.message());
+            deliverFailure(null, "网络异常(" + getErrorDescription(response.code()) + ")," + response.message());
         }
+    }
+
+    /**
+     * 错误异常解释
+     * @param code
+     * @return
+     */
+    private String getErrorDescription(int code) {
+        if(400 == code) {
+            return "请求无法被服务器理解";
+        }else if (403 == code){
+            return "服务器已经理解请求，但是拒绝执行";
+        }else if (404  == code){
+            return "服务器上无法找到请求的资源";
+        }else if (500  == code){
+            return "服务器本身发生错误";
+        }else if (503  == code){
+            return "服务器暂时处于超负载或正在进行停机维护";
+        }
+        return code+"";
     }
 
     @Override
     public void onFailure(Call call, IOException e) {
-        Loger.d("请求失败:" + e.getMessage());
+        Loger.d("请求失败:" + e);
         Loger.d("---------------okhttp end---------------------");
-        deliverFailure(null, "网络异常(" + e.getMessage() + ")");
+        deliverFailure(null, "网络异常(" + e + ")");
     }
 
     /**
