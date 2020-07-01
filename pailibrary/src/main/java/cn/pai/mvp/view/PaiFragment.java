@@ -9,6 +9,8 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 
+import androidx.viewbinding.ViewBinding;
+
 import cn.pai.common.listener.OnPromptListener;
 import cn.pai.mvp.app.ActivityStack;
 import cn.pai.mvp.presenter.IPresenter;
@@ -18,8 +20,8 @@ import cn.pai.mvp.presenter.IPresenter;
  * @description fragment基类
  * @date 2017年3月2日下午9:59:00
  */
-public abstract class PaiFragment<V extends IView, P extends IPresenter<V>>
-        extends MvpFragment<V, P> {
+public abstract class PaiFragment<VB extends ViewBinding, V extends IView, P extends IPresenter<V>>
+        extends MvpFragment<VB, V, P> {
 
     /**
      * 承载fragment的activity
@@ -48,7 +50,7 @@ public abstract class PaiFragment<V extends IView, P extends IPresenter<V>>
 
     @Override
     public boolean bindService(Intent service, ServiceConnection conn, int flags) {
-        return getContext().bindService(service,conn,flags);
+        return getContext().bindService(service, conn, flags);
     }
 
     @Override

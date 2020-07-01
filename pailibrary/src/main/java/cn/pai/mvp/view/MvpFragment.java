@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.viewbinding.ViewBinding;
 
 import butterknife.ButterKnife;
 import cn.pai.common.log.Loger;
@@ -18,18 +19,18 @@ import cn.pai.mvp.presenter.IPresenter;
  * author：pany
  * on 2017/10/21 21:01
  */
-public abstract class MvpFragment<V extends IView, P extends IPresenter<V>>
+public abstract class MvpFragment<VB extends ViewBinding, V extends IView, P extends IPresenter<V>>
         extends Fragment implements IView {
-
-    /**
-     * 当前视图
-     */
-    private View contentView;
 
     /**
      * presenter
      */
     protected P presenter;
+
+    /**
+     * viewBinding
+     */
+    protected VB vb;
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -70,20 +71,20 @@ public abstract class MvpFragment<V extends IView, P extends IPresenter<V>>
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        contentView = inflater.inflate(layoutId(), container, false);
-        return contentView;
+//        contentView = inflater.inflate(layoutId(), container, false);
+        return (vb = layoutViewBinding(inflater)).getRoot();
     }
 
     /**
      * 视图资源ID
      */
-    protected abstract int layoutId();
+    protected abstract VB layoutViewBinding(LayoutInflater inflater);
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Loger.p("frag-onViewCreated");
-        ButterKnife.bind(this, contentView);// 注解绑定控件
+        ButterKnife.bind(view);// 注解绑定控件
         layoutView();               // 视图初始化操作
     }
 
@@ -99,7 +100,9 @@ public abstract class MvpFragment<V extends IView, P extends IPresenter<V>>
     /**
      * 页面绑定presenter
      */
-    protected abstract P bindPresenter();
+    protected P bindPresenter() {
+        return null;
+    }
 
     /**
      * 加载视图
@@ -174,16 +177,5 @@ public abstract class MvpFragment<V extends IView, P extends IPresenter<V>>
      */
     private boolean isIntervenorNotNull() {
         return presenter != null && presenter.getIntervenor() != null;
-    }
-
-    /**
-     * 获取view对象便捷方法
-     *
-     * @param id 资源id
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-    protected <H extends View> H find(int id) {
-        return (H) contentView.findViewById(id);
     }
 }

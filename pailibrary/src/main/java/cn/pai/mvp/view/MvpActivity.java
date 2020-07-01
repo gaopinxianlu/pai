@@ -2,9 +2,10 @@ package cn.pai.mvp.view;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.view.LayoutInflater;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewbinding.ViewBinding;
 
 import butterknife.ButterKnife;
 import cn.pai.common.log.Loger;
@@ -15,13 +16,18 @@ import cn.pai.mvp.presenter.IPresenter;
  * author：pany
  * on 2017/10/21 18:45
  */
-public abstract class MvpActivity<V extends IView, P extends IPresenter<V>>
+public abstract class MvpActivity<VB extends ViewBinding, V extends IView, P extends IPresenter<V>>
         extends AppCompatActivity implements IView {
 
     /**
      * presenter
      */
     protected P presenter;
+
+    /**
+     * viewBinding
+     */
+    protected VB vb;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -46,7 +52,7 @@ public abstract class MvpActivity<V extends IView, P extends IPresenter<V>>
         super.onCreate(savedInstanceState);
         Loger.i("act-onCreate");
         layoutPre(savedInstanceState);  // 加载视图前
-        setContentView(layoutId());     // 设置视图
+        setContentView((vb = layoutViewBinding(LayoutInflater.from(this))).getRoot());     // 设置视图
         ButterKnife.bind(this); // 注解绑定控件
         layoutView(savedInstanceState); // 视图初始化操作
         if (presenter != null) {
@@ -70,12 +76,14 @@ public abstract class MvpActivity<V extends IView, P extends IPresenter<V>>
     /**
      * 视图资源ID
      */
-    protected abstract int layoutId();
+    protected abstract VB layoutViewBinding(LayoutInflater inflater);
 
     /**
      * 页面绑定presenter
      */
-    protected abstract P bindPresenter();
+    protected P bindPresenter(){
+        return null;
+    }
 
     /**
      * 加载视图，一些初始化
@@ -155,16 +163,5 @@ public abstract class MvpActivity<V extends IView, P extends IPresenter<V>>
      */
     private boolean isIntervenorNotNull() {
         return presenter != null && presenter.getIntervenor() != null;
-    }
-
-    /**
-     * 获取view对象便捷方法
-     *
-     * @param id 视图资源id
-     * @return
-     */
-    @SuppressWarnings("unchecked")
-    protected <H extends View> H find(int id) {
-        return (H) findViewById(id);
     }
 }

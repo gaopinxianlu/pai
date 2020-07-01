@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.viewbinding.ViewBinding;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -24,8 +25,8 @@ import cn.pai.mvp.presenter.IPresenter;
  * @description activity基类
  * @date 2017年6月30日下午2:59:23
  */
-public abstract class PaiActivity<V extends IView, P extends IPresenter<V>>
-        extends MvpActivity<V, P> {
+public abstract class PaiActivity<VB extends ViewBinding, V extends IView, P extends IPresenter<V>>
+        extends MvpActivity<VB, V, P> {
 
     /**
      * 消息提示
