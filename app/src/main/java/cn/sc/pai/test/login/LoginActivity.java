@@ -43,11 +43,11 @@ public class LoginActivity extends PaiActivity<ActivityLoginBinding ,LoginContra
 
     @Override
     public String getUser() {
-        return vBind.etUserName.getText().toString();
+        return vb.etUserName.getText().toString();
     }
 
     @Override
     public String getPwd() {
-        return vBind.etUserPwd.getText().toString();
+        return vb.etUserPwd.getText().toString();
     }
 }

@@ -16,12 +16,12 @@ public class MainFragment extends PaiFragment<FragmentMainBinding, IView, IPrese
 
 
     @Override
-    protected FragmentMainBinding layoutViewBinding(LayoutInflater inflater, ViewGroup container) {
+    protected FragmentMainBinding layoutViewBinding(LayoutInflater inflater) {
         return FragmentMainBinding.inflate(inflater);
     }
 
     @Override
     protected void layoutView() {
-        vBind.tvMsg.setText("我在水里游泳");
+        vb.tvMsg.setText("我在水里游泳");
     }
 }
