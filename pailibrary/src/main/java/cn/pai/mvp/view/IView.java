@@ -9,6 +9,8 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 
+import androidx.viewbinding.ViewBinding;
+
 import cn.pai.common.listener.OnPromptListener;
 
 /**
@@ -16,7 +18,9 @@ import cn.pai.common.listener.OnPromptListener;
  * @description mvp 的 View基类,视图的基本操作
  * @date 2017年6月15日上午11:06:01
  */
-public interface IView {
+public interface IView<VB> {
+
+    VB vb();
 
     /**
      * 获取当前Activity

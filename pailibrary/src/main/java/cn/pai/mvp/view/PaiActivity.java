@@ -25,7 +25,7 @@ import cn.pai.mvp.presenter.IPresenter;
  * @description activity基类
  * @date 2017年6月30日下午2:59:23
  */
-public abstract class PaiActivity<VB extends ViewBinding, V extends IView, P extends IPresenter<V>>
+public abstract class PaiActivity<VB extends ViewBinding, V extends IView<VB>, P extends IPresenter<V>>
         extends MvpActivity<VB, V, P> {
 
     /**
@@ -44,12 +44,17 @@ public abstract class PaiActivity<VB extends ViewBinding, V extends IView, P ext
     }
 
     @Override
+    public VB vb() {
+        return vb;
+    }
+
+    @Override
     public Activity getActivity() {
         return this;
     }
 
     @Override
-    public Activity getActivity(Class<?> cls) {
+    public Activity getActivity(Class cls) {
         return ActivityStack.getInstance().getActivity(cls);
     }
 
@@ -185,7 +190,7 @@ public abstract class PaiActivity<VB extends ViewBinding, V extends IView, P ext
     }
 
     @Override
-    public void finish(Class<?> cls) {
+    public void finish(Class cls) {
         ActivityStack.getInstance().finishActivity(cls);
     }
 

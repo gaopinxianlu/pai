@@ -22,7 +22,7 @@ public class MainPresenter extends PaiPresenter<MainContract.View> implements Ma
             @Override
             public void onCreate(Bundle savedInstanceState) {
                 super.onCreate(savedInstanceState);
-                Bundle bundle = view.getBundle();
+                Bundle bundle = pv.getBundle();
                 userName = bundle.getString("UserName");
                 userPwd = bundle.getString("UserPwd");
             }
@@ -31,8 +31,7 @@ public class MainPresenter extends PaiPresenter<MainContract.View> implements Ma
 
     @Override
     public void start() {
-
-        view.prompt("用户名："+userName+"\n密码："+userPwd);
+        pv.prompt("用户名："+userName+"\n密码："+userPwd);
     }
 
 

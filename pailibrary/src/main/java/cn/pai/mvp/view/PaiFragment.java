@@ -20,7 +20,7 @@ import cn.pai.mvp.presenter.IPresenter;
  * @description fragment基类
  * @date 2017年3月2日下午9:59:00
  */
-public abstract class PaiFragment<VB extends ViewBinding, V extends IView, P extends IPresenter<V>>
+public abstract class PaiFragment<VB extends ViewBinding, V extends IView<VB>, P extends IPresenter<V>>
         extends MvpFragment<VB, V, P> {
 
     /**
@@ -29,7 +29,12 @@ public abstract class PaiFragment<VB extends ViewBinding, V extends IView, P ext
     protected IView activityView;
 
     @Override
-    public Activity getActivity(Class<?> cls) {
+    public VB vb() {
+        return vb;
+    }
+
+    @Override
+    public Activity getActivity(Class cls) {
         return ActivityStack.getInstance().getActivity(cls);
     }
 
@@ -167,7 +172,7 @@ public abstract class PaiFragment<VB extends ViewBinding, V extends IView, P ext
     }
 
     @Override
-    public void finish(Class<?> cls) {
+    public void finish(Class cls) {
         ActivityStack.getInstance().finishActivity(cls);
     }
 

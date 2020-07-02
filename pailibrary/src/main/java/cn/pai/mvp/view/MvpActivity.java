@@ -16,8 +16,8 @@ import cn.pai.mvp.presenter.IPresenter;
  * author：pany
  * on 2017/10/21 18:45
  */
-public abstract class MvpActivity<VB extends ViewBinding, V extends IView, P extends IPresenter<V>>
-        extends AppCompatActivity implements IView {
+public abstract class MvpActivity<VB extends ViewBinding, V extends IView<VB>, P extends IPresenter<V>>
+        extends AppCompatActivity implements IView<VB> {
 
     /**
      * presenter

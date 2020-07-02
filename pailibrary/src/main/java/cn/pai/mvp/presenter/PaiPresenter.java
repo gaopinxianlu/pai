@@ -13,7 +13,7 @@ public abstract class PaiPresenter<V extends IView> implements IPresenter<V> {
     /**
      * 视图
      */
-    protected V view = null;
+    protected V pv = null;
 
     /**
      * activity,fragment生命周期介入者
@@ -26,7 +26,7 @@ public abstract class PaiPresenter<V extends IView> implements IPresenter<V> {
      */
     @Override
     public void attach(V view) {
-        this.view = view;
+        this.pv = view;
         this.intervenor = createIntervenor();
     }
 
@@ -55,7 +55,7 @@ public abstract class PaiPresenter<V extends IView> implements IPresenter<V> {
      */
     @Override
     public void detach() {
-        this.view = null;
+        this.pv = null;
         this.intervenor = null;
     }
 }

@@ -37,15 +37,15 @@ public class LoginPresenter extends PaiPresenter<LoginContract.View> implements 
      */
     @Override
     public void reqLogin() {
-        String userName = view.getUser();
-        String userPwd = view.getPwd();
-        view.loading("登录中...");
+        String userName = pv.vb().etUserName.getText().toString().trim();
+        String userPwd = pv.vb().etUserPwd.getText().toString().trim();
+        pv.loading("登录中...");
         handler.postDelayed(() -> {
-            view.loaded();
+            pv.loaded();
             Bundle bundle = new Bundle();
             bundle.putString("UserName",userName);
             bundle.putString("UserPwd",userPwd);
-            view.toActivity(MainActivity.class,bundle);
+            pv.toActivity(MainActivity.class,bundle);
         },1000);
 
 
