@@ -5,6 +5,7 @@ import androidx.collection.ArrayMap;
 import java.util.Map.Entry;
 
 import cn.pai.common.log.Loger;
+import cn.pai.connect.http.param.ByteSubmit;
 import cn.pai.connect.http.param.FormSubmit;
 import cn.pai.connect.http.param.JoinSubmit;
 import cn.pai.connect.http.param.JsonSubmit;
@@ -174,6 +175,16 @@ public class OkRequest {
      */
     public TextSubmit text() {
         TextSubmit submit = new TextSubmit(builder);
+        return submit;
+    }
+
+    /**
+     * bytes参数
+     *
+     * @return
+     */
+    public ByteSubmit bytes() {
+        ByteSubmit submit = new ByteSubmit(builder);
         return submit;
     }
 }
