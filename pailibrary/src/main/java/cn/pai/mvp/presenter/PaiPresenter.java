@@ -22,6 +22,7 @@ public abstract class PaiPresenter<V extends IView> implements IPresenter<V> {
 
     /**
      * 绑定
+     *
      * @param view
      */
     @Override

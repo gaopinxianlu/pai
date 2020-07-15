@@ -3,18 +3,15 @@ package cn.sc.pai.test.login;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.alibaba.fastjson.JSONObject;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.OnLifecycleEvent;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import cn.pai.connect.http.param.JoinSubmit;
-import cn.pai.connect.http.param.JsonSubmit;
-import cn.pai.connect.http.param.TextSubmit;
-import cn.pai.connect.http.request.OkRequest;
-import cn.pai.connect.http.respcall.StringRespCall;
+import cn.pai.common.log.Loger;
 import cn.pai.mvp.presenter.PaiPresenter;
-import cn.sc.pai.test.app.AppRequest;
 import cn.sc.pai.test.main.MainActivity;
 
 /**
@@ -83,5 +80,15 @@ public class LoginPresenter extends PaiPresenter<LoginContract.View> implements 
      */
     protected String createReqTime() {
         return new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    void onCreate(LifecycleOwner owner) {
+        Loger.d("p---------activity--------onCreate");
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    void onStart(LifecycleOwner owner) {
+        Loger.d("p----------activity-------onStart");
     }
 }

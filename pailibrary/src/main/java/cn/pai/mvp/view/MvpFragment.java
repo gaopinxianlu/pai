@@ -63,6 +63,7 @@ public abstract class MvpFragment<VB extends ViewBinding, V extends IView<VB>, P
         presenter = bindPresenter();        // 绑定presenter
         if (presenter != null) {
             presenter.attach((V) this);     //presenter绑定view和Interveno
+            getLifecycle().addObserver(presenter);//添加lifecycle生命周期观察者
         }
         if (isIntervenorNotNull()) {
             presenter.getIntervenor().onCreate(savedInstanceState);

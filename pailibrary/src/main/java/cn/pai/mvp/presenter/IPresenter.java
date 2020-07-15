@@ -1,5 +1,7 @@
 package cn.pai.mvp.presenter;
 
+import androidx.lifecycle.LifecycleObserver;
+
 import cn.pai.mvp.intervenor.Intervenor;
 import cn.pai.mvp.view.IView;
 
@@ -8,7 +10,7 @@ import cn.pai.mvp.view.IView;
  * @description mvp presenter基类
  * @date 2017年3月2日下午8:37:20
  */
-public interface IPresenter<V extends IView> {
+public interface IPresenter<V extends IView> extends LifecycleObserver {
 
     /**
      * 绑定View和介入者
