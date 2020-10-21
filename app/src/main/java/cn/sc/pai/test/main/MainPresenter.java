@@ -19,9 +19,10 @@ public class MainPresenter extends PaiPresenter<MainContract.View> implements Ma
     @Override
     protected Intervenor createIntervenor() {
         return new Intervenor(){
+
             @Override
-            public void onCreate(Bundle savedInstanceState) {
-                super.onCreate(savedInstanceState);
+            public void onCreate() {
+                super.onCreate();
                 Bundle bundle = pv.getBundle();
                 userName = bundle.getString("UserName");
                 userPwd = bundle.getString("UserPwd");

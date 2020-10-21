@@ -3,6 +3,10 @@ package cn.pai.mvp.intervenor;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.OnLifecycleEvent;
+
 /**
  * 生命周期介入
  * 整合了activity和fragment常用的生命周期
@@ -11,15 +15,16 @@ import android.os.Bundle;
  * author：pany
  * on 2017/10/19 10:55
  */
-public class Intervenor {
+public class Intervenor implements LifecycleObserver {
 
     /**
-     * 注：该介入函数发生在setContentView之后，且此时presenter未绑定视图
+     * 注：该介入函数发生在attachBindPresenter之后，layoutAfterViewBind之前执行，view和presenter已经绑定完成
+     * 不使用@OnLifecycleEvent(Lifecycle.Event.ON_CREATE)是因为，lifecycle的oncreate,onstart,onresume都会在父类对应的
+     * 方法执行完后才会执行，也就是presenter.start执行完后才执行
      * Must be called from {@link android.app.Activity#onCreate(Bundle)}
      *
-     * @param savedInstanceState
      */
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate() {
 
     }
 
@@ -27,6 +32,7 @@ public class Intervenor {
      * 没焦点，不可操作，用户所见
      * Must be called from {@link android.app.Activity#onStart()}
      */
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
     public void onStart() {
 
     }
@@ -35,6 +41,7 @@ public class Intervenor {
      * 有焦点，用户交互
      * Must be called from {@link android.app.Activity#onResume()}
      */
+    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     public void onResume() {
 
     }
@@ -43,6 +50,7 @@ public class Intervenor {
      * 已暂停，可见但不在前台，不可交互
      * Must be called from {@link android.app.Activity#onPause()}
      */
+    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     public void onPause() {
 
     }
@@ -51,6 +59,7 @@ public class Intervenor {
      * 停止，不可见
      * Must be called from {@link android.app.Activity#onStop()}
      */
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     public void onStop() {
 
     }
@@ -59,6 +68,7 @@ public class Intervenor {
      * 被销毁
      * Must be called from {@link android.app.Activity#onDestroy()}
      */
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     public void onDestroy() {
 
     }

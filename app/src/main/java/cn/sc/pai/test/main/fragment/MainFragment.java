@@ -20,7 +20,7 @@ public class MainFragment extends PaiFragment<FragmentMainBinding, MainFragContr
     }
 
     @Override
-    protected void layoutView() {
+    protected void layoutAfterViewBind() {
         vb.tvMsg.setText("我在水里游泳");
     }
 }

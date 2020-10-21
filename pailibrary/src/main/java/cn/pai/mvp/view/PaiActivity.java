@@ -38,8 +38,8 @@ public abstract class PaiActivity<VB extends ViewBinding, V extends IView<VB>, P
     private ProgressDialog loadDialog;
 
     @Override
-    protected void layoutPre(Bundle savedInstanceState) {
-        super.layoutPre(savedInstanceState);
+    protected void layoutBeforeViewBind(Bundle savedInstanceState) {
+        super.layoutBeforeViewBind(savedInstanceState);
         ActivityStack.getInstance().add(this);
     }
 

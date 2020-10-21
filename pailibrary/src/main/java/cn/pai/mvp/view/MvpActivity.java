@@ -51,27 +51,42 @@ public abstract class MvpActivity<VB extends ViewBinding, V extends IView<VB>, P
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Loger.i("act-onCreate");
-        layoutPre(savedInstanceState);  // 加载视图前
-        setContentView((vb = layoutViewBinding(LayoutInflater.from(this))).getRoot());     // 设置视图
-        ButterKnife.bind(this); // 注解绑定控件
-        layoutView(savedInstanceState); // 视图初始化操作
+        layoutBeforeViewBind(savedInstanceState);  // 绑定视图前（某些样式设置需要放在setContentView之前）
+        setContentView((vb = layoutViewBinding(LayoutInflater.from(this))).getRoot());  // 设置视图
+        ButterKnife.bind(this);  // butterknife绑定控件
+        attachBindPresenter();          //连接绑定的presenter
+        if (isIntervenorNotNull()) {
+            presenter.getIntervenor().onCreate();
+        }
+        layoutAfterViewBind();          // 视图初始化操作
         if (presenter != null) {
             presenter.start();          //presenter初始化操作
         }
     }
 
     /**
-     * 加载视图前的操作 setContentView之前的操作
+     * 绑定视图前的操作
+     * 在setContentView和butterKnife.bind之前执行
      */
-    protected void layoutPre(Bundle savedInstanceState) {
+    protected void layoutBeforeViewBind(Bundle savedInstanceState) {
+
+    }
+
+    /**
+     * 连接视图和绑定的presenter
+     */
+    private void attachBindPresenter() {
         presenter = bindPresenter();    // 绑定presenter
         if (presenter != null) {
             presenter.attach((V) this);//presenter绑定view和Interveno
-            getLifecycle().addObserver(presenter);//添加lifecycle生命周期观察者
         }
-        if (isIntervenorNotNull()) {
-            presenter.getIntervenor().onCreate(savedInstanceState);
-        }
+    }
+
+    /**
+     * 页面绑定presenter
+     */
+    protected P bindPresenter() {
+        return null;
     }
 
     /**
@@ -80,24 +95,16 @@ public abstract class MvpActivity<VB extends ViewBinding, V extends IView<VB>, P
     protected abstract VB layoutViewBinding(LayoutInflater inflater);
 
     /**
-     * 页面绑定presenter
-     */
-    protected P bindPresenter(){
-        return null;
-    }
-
-    /**
      * 加载视图，一些初始化
      */
-    protected abstract void layoutView(Bundle savedInstanceState);
+    protected void layoutAfterViewBind(){
+
+    }
 
     @Override
     protected void onStart() {
         super.onStart();
         Loger.i("act-onStart");
-        if (isIntervenorNotNull()) {
-            presenter.getIntervenor().onStart();
-        }
     }
 
     @Override
@@ -111,9 +118,6 @@ public abstract class MvpActivity<VB extends ViewBinding, V extends IView<VB>, P
         // TODO Auto-generated method stub
         super.onResume();
         Loger.i("act-onResume");
-        if (isIntervenorNotNull()) {
-            presenter.getIntervenor().onResume();
-        }
     }
 
     @Override
@@ -121,18 +125,12 @@ public abstract class MvpActivity<VB extends ViewBinding, V extends IView<VB>, P
         // TODO Auto-generated method stub
         super.onPause();
         Loger.i("act-onPause");
-        if (isIntervenorNotNull()) {
-            presenter.getIntervenor().onPause();
-        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         Loger.i("act-onStop");
-        if (isIntervenorNotNull()) {
-            presenter.getIntervenor().onStop();
-        }
     }
 
     @Override
@@ -140,9 +138,6 @@ public abstract class MvpActivity<VB extends ViewBinding, V extends IView<VB>, P
         // TODO Auto-generated method stub
         super.onDestroy();
         Loger.i("act-onDestroy");
-        if (isIntervenorNotNull()) {
-            presenter.getIntervenor().onDestroy();
-        }
         if (presenter != null) {
             presenter.detach();
             presenter = null;

@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import butterknife.OnClick;
+import cn.pai.common.log.Loger;
 import cn.pai.mvp.view.PaiActivity;
 import cn.sc.pai.test.R;
 import cn.sc.pai.test.databinding.ActivityLoginBinding;
@@ -28,10 +29,6 @@ public class LoginActivity extends PaiActivity<ActivityLoginBinding ,LoginContra
         return new LoginPresenter();
     }
 
-    @Override
-    protected void layoutView(Bundle savedInstanceState) {
-
-    }
 
     @OnClick(R.id.btnLogin)
     void onClick(View v) {

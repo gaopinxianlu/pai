@@ -29,6 +29,10 @@ public abstract class PaiPresenter<V extends IView> implements IPresenter<V> {
     public void attach(V view) {
         this.pv = view;
         this.intervenor = createIntervenor();
+        if (this.intervenor != null) {
+            //增加生命周期的介入者
+            this.pv.getLifecycle().addObserver(this.intervenor);
+        }
     }
 
     /**

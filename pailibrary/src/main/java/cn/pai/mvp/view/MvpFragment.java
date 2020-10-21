@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewbinding.ViewBinding;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import cn.pai.common.log.Loger;
 import cn.pai.mvp.presenter.IPresenter;
 
@@ -22,6 +23,10 @@ import cn.pai.mvp.presenter.IPresenter;
 public abstract class MvpFragment<VB extends ViewBinding, V extends IView<VB>, P extends IPresenter<V>>
         extends Fragment implements IView<VB> {
 
+    /**
+     * butternif
+     */
+    private Unbinder unbinder;
     /**
      * presenter
      */
@@ -60,14 +65,6 @@ public abstract class MvpFragment<VB extends ViewBinding, V extends IView<VB>, P
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Loger.p("frag-onCreate");
-        presenter = bindPresenter();        // 绑定presenter
-        if (presenter != null) {
-            presenter.attach((V) this);     //presenter绑定view和Interveno
-            getLifecycle().addObserver(presenter);//添加lifecycle生命周期观察者
-        }
-        if (isIntervenorNotNull()) {
-            presenter.getIntervenor().onCreate(savedInstanceState);
-        }
     }
 
     @Override
@@ -85,16 +82,17 @@ public abstract class MvpFragment<VB extends ViewBinding, V extends IView<VB>, P
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Loger.p("frag-onViewCreated");
-        ButterKnife.bind(view);// 注解绑定控件
-        layoutView();               // 视图初始化操作
+        unbinder = ButterKnife.bind(view);// butterknife绑定控件
+        attachBindPresenter();// 连接绑定的presenter
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        Loger.p("frag-onActivityCreated");
+    /**
+     * 连接视图和绑定的presenter
+     */
+    private void attachBindPresenter() {
+        presenter = bindPresenter();    // 绑定presenter
         if (presenter != null) {
-            presenter.start();      //presenter初始化操作
+            presenter.attach((V) this);//presenter绑定view和Interveno
         }
     }
 
@@ -105,60 +103,64 @@ public abstract class MvpFragment<VB extends ViewBinding, V extends IView<VB>, P
         return null;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Loger.p("frag-onActivityCreated");
+        if (isIntervenorNotNull()) {
+            presenter.getIntervenor().onCreate();
+        }
+        layoutAfterViewBind();               // 视图初始化操作
+        if (presenter != null) {
+            presenter.start();      //presenter初始化操作
+        }
+    }
+
     /**
      * 加载视图
      */
-    protected abstract void layoutView();
+    protected void layoutAfterViewBind() {
+
+    }
 
     @Override
     public void onStart() {
         super.onStart();
         Loger.p("frag-onStart");
-        if (isIntervenorNotNull()) {
-            presenter.getIntervenor().onStart();
-        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
         Loger.p("frag-onResume");
-        if (isIntervenorNotNull()) {
-            presenter.getIntervenor().onResume();
-        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
         Loger.p("frag-onPause");
-        if (isIntervenorNotNull()) {
-            presenter.getIntervenor().onPause();
-        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
         Loger.p("frag-onStop");
-        if (isIntervenorNotNull()) {
-            presenter.getIntervenor().onStop();
-        }
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         Loger.p("frag-onDestroyView");
+        //butterKnife在fragment中使用需要解绑
+        if (unbinder != null) {
+            unbinder.unbind();
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         Loger.p("frag-onDestroy");
-        if (isIntervenorNotNull()) {
-            presenter.getIntervenor().onDestroy();
-        }
         if (presenter != null) {
             presenter.detach();
             presenter = null;

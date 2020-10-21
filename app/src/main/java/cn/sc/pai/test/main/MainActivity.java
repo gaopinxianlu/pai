@@ -24,7 +24,7 @@ public class MainActivity extends PaiActivity<ActivityMainBinding, MainContract.
     }
 
     @Override
-    protected void layoutView(Bundle savedInstanceState) {
+    protected void layoutAfterViewBind() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frag,new MainFragment());
         ft.commit();
