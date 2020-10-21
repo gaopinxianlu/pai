@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 
+import androidx.lifecycle.Lifecycle;
 import androidx.viewbinding.ViewBinding;
 
 import cn.pai.common.listener.OnPromptListener;
@@ -20,7 +21,17 @@ import cn.pai.common.listener.OnPromptListener;
  */
 public interface IView<VB> {
 
+    /**
+     * ViewBinding
+     * @return
+     */
     VB vb();
+
+    /**
+     * 获取Lifecycle
+     * @return
+     */
+    Lifecycle getLifecycle();
 
     /**
      * 获取当前Activity
