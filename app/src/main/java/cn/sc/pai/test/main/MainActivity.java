@@ -1,6 +1,5 @@
 package cn.sc.pai.test.main;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 
 import androidx.fragment.app.FragmentTransaction;
