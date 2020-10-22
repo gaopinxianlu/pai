@@ -38,8 +38,8 @@ public class JoinSubmit extends Submit {
     }
 
     public void get(Callback call) {
-        String url = param.length() > 0 ? urlBuffer.append("?").append(param)
-                .toString() : urlBuffer.toString();
+        String url = param.length() > 0 ? urlBuffer.append("?").append(param.substring(0, param.length() - 1)).toString()
+                : urlBuffer.toString();
         builder.url(url);
         enqueue(builder.get().build(), call);
     }
