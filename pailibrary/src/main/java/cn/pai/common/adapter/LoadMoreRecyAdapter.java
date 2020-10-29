@@ -26,7 +26,7 @@ import java.util.List;
  * @description RecyclerView适配器
  * @date 2017年3月2日下午9:54:59
  */
-public abstract class LoadMoreRecyAdapter<T extends ViewHolder, D> extends
+public abstract class LoadMoreRecyAdapter<T extends RecyclerView.ViewHolder, D> extends
         RecyclerView.Adapter<T> implements IAdapter<D>, View.OnClickListener {
 
     protected List<D> datas;

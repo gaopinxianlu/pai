@@ -1,6 +1,14 @@
 package cn.pai.common.adapter;
 
+import android.util.SparseArray;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,7 +34,6 @@ public abstract class CommRecyAdapter<D> extends RecyclerView.Adapter<RecyclerVi
         // TODO Auto-generated constructor stub
         this.datas = new ArrayList<>(0);
     }
-
 
 
     @Override
@@ -149,5 +156,61 @@ public abstract class CommRecyAdapter<D> extends RecyclerView.Adapter<RecyclerVi
 
         void onItemClick(View view, int position, D data);
 
+    }
+
+
+    /**
+     * ViewHolder
+     */
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        protected SparseArray<View> views;
+
+        public ViewHolder(View itemView, int viewType) {
+            super(itemView);
+            // TODO Auto-generated constructor stub
+            this.views = new SparseArray<>();
+        }
+
+        /**
+         * 创建ViewHolder
+         *
+         * @param layoutId
+         * @param parent
+         * @return
+         */
+        public static ViewHolder create(ViewGroup parent, int viewType, int layoutId) {
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
+            return new ViewHolder(itemView, viewType);
+        }
+
+        public <T extends View> T get(int id) {
+            View view = views.get(id);
+            if (view == null) {
+                view = itemView.findViewById(id);
+                views.put(id, view);
+            }
+            return (T) view;
+        }
+
+        public ImageView getImageView(int id) {
+            return get(id);
+        }
+
+        public TextView getTextView(int id) {
+            return get(id);
+        }
+
+        public CheckBox getCheckBox(int id) {
+            return get(id);
+        }
+
+        public Spinner getSpinner(int id) {
+            return get(id);
+        }
+
+        public EditText getEditText(int id) {
+            return get(id);
+        }
     }
 }
