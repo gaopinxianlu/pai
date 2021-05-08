@@ -22,7 +22,7 @@ public abstract class MvpActivity<VB extends ViewBinding, V extends IView<VB>, P
     /**
      * presenter
      */
-    protected P presenter;
+    protected P p;
 
     /**
      * viewBinding
@@ -34,7 +34,7 @@ public abstract class MvpActivity<VB extends ViewBinding, V extends IView<VB>, P
         super.onActivityResult(requestCode, resultCode, data);
         Loger.i("act-onActivityResult");
         if (isIntervenorNotNull()) {
-            presenter.getIntervenor().onActivityResult(requestCode, resultCode, data);
+            p.getIntervenor().onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -43,7 +43,7 @@ public abstract class MvpActivity<VB extends ViewBinding, V extends IView<VB>, P
         super.onSaveInstanceState(outState);
         Loger.i("act-onSaveInstanceState");
         if (isIntervenorNotNull()) {
-            presenter.getIntervenor().onSaveInstanceState(outState);
+            p.getIntervenor().onSaveInstanceState(outState);
         }
     }
 
@@ -56,11 +56,11 @@ public abstract class MvpActivity<VB extends ViewBinding, V extends IView<VB>, P
         ButterKnife.bind(this);  // butterknife绑定控件
         attachBindPresenter();          //连接绑定的presenter
         if (isIntervenorNotNull()) {
-            presenter.getIntervenor().onCreate();
+            p.getIntervenor().onCreate();
         }
         layoutAfterViewBind();          // 视图初始化操作
-        if (presenter != null) {
-            presenter.start();          //presenter初始化操作
+        if (p != null) {
+            p.start();          //presenter初始化操作
         }
     }
 
@@ -76,9 +76,9 @@ public abstract class MvpActivity<VB extends ViewBinding, V extends IView<VB>, P
      * 连接视图和绑定的presenter
      */
     private void attachBindPresenter() {
-        presenter = bindPresenter();    // 绑定presenter
-        if (presenter != null) {
-            presenter.attach((V) this);//presenter绑定view和Interveno
+        p = bindPresenter();    // 绑定presenter
+        if (p != null) {
+            p.attach((V) this);//presenter绑定view和Interveno
         }
     }
 
@@ -138,9 +138,9 @@ public abstract class MvpActivity<VB extends ViewBinding, V extends IView<VB>, P
         // TODO Auto-generated method stub
         super.onDestroy();
         Loger.i("act-onDestroy");
-        if (presenter != null) {
-            presenter.detach();
-            presenter = null;
+        if (p != null) {
+            p.detach();
+            p = null;
         }
     }
 
@@ -148,7 +148,7 @@ public abstract class MvpActivity<VB extends ViewBinding, V extends IView<VB>, P
     public void finish() {
         super.finish();
         if (isIntervenorNotNull()) {
-            presenter.getIntervenor().onFinish();
+            p.getIntervenor().onFinish();
         }
     }
 
@@ -158,6 +158,6 @@ public abstract class MvpActivity<VB extends ViewBinding, V extends IView<VB>, P
      * @return
      */
     private boolean isIntervenorNotNull() {
-        return presenter != null && presenter.getIntervenor() != null;
+        return p != null && p.getIntervenor() != null;
     }
 }

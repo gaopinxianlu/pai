@@ -13,6 +13,7 @@
         android:layout_marginTop="200dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        android:inputType="number"
         android:hint="用户名"/>
 
 
@@ -24,6 +25,7 @@
         android:layout_marginTop="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        android:inputType="number"
         android:hint="密码"/>
 
     <Button
