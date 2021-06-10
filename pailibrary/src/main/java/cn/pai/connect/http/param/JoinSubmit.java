@@ -41,6 +41,7 @@ public class JoinSubmit extends Submit {
         String url = param.length() > 0 ? urlBuffer.append("?").append(param.substring(0, param.length() - 1)).toString()
                 : urlBuffer.toString();
         builder.url(url);
+        Loger.d("请求url：" + url);
         enqueue(builder.get().build(), call);
     }
 
