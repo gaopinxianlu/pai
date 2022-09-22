@@ -10,7 +10,7 @@ import java.text.DecimalFormat;
  * author：pany
  * on 2018/1/17 16:17
  */
-public class AmtUtils {
+public class AmountUtil {
 
     /**
      * 格式化 元

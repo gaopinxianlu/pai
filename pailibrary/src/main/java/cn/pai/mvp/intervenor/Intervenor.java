@@ -3,19 +3,57 @@ package cn.pai.mvp.intervenor;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleObserver;
-import androidx.lifecycle.OnLifecycleEvent;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.DefaultLifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
 
 /**
  * 生命周期介入
  * 整合了activity和fragment常用的生命周期
  * 目的是为了能在presenter处理activity或者fragment生命周期发生时的
  * 数据，比如屏幕旋转，电话进入等
+ * 官方将@OnLifecycleEvent(Lifecycle.Event.ON_CREATE)注解废弃掉，推荐使用DefaultLifecycleObserver
  * author：pany
  * on 2017/10/19 10:55
  */
-public class Intervenor implements LifecycleObserver {
+public class Intervenor {
+
+    private DefaultLifecycleObserver lifecycleObserver = new DefaultLifecycleObserver() {
+        //观察者的oncreate方法是在oncreate所有方法执行完最后再执行的
+        @Override
+        public void onCreate(@NonNull LifecycleOwner owner) {
+            //因为业务逻辑需要所以不在此执行oncreate
+        }
+
+        @Override
+        public void onStart(@NonNull LifecycleOwner owner) {
+            Intervenor.this.onStart();
+        }
+
+        @Override
+        public void onResume(@NonNull LifecycleOwner owner) {
+            Intervenor.this.onResume();
+        }
+
+        @Override
+        public void onPause(@NonNull LifecycleOwner owner) {
+            Intervenor.this.onPause();
+        }
+
+        @Override
+        public void onStop(@NonNull LifecycleOwner owner) {
+            Intervenor.this.onStop();
+        }
+
+        @Override
+        public void onDestroy(@NonNull LifecycleOwner owner) {
+            Intervenor.this.onDestroy();
+        }
+    };
+
+    public DefaultLifecycleObserver getLifecycleObserver() {
+        return lifecycleObserver;
+    }
 
     /**
      * 注：该介入函数发生在attachBindPresenter之后，layoutAfterViewBind之前执行，view和presenter已经绑定完成
@@ -32,7 +70,6 @@ public class Intervenor implements LifecycleObserver {
      * 没焦点，不可操作，用户所见
      * Must be called from {@link android.app.Activity#onStart()}
      */
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
     public void onStart() {
 
     }
@@ -41,7 +78,6 @@ public class Intervenor implements LifecycleObserver {
      * 有焦点，用户交互
      * Must be called from {@link android.app.Activity#onResume()}
      */
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     public void onResume() {
 
     }
@@ -50,7 +86,6 @@ public class Intervenor implements LifecycleObserver {
      * 已暂停，可见但不在前台，不可交互
      * Must be called from {@link android.app.Activity#onPause()}
      */
-    @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     public void onPause() {
 
     }
@@ -59,7 +94,6 @@ public class Intervenor implements LifecycleObserver {
      * 停止，不可见
      * Must be called from {@link android.app.Activity#onStop()}
      */
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     public void onStop() {
 
     }
@@ -68,7 +102,6 @@ public class Intervenor implements LifecycleObserver {
      * 被销毁
      * Must be called from {@link android.app.Activity#onDestroy()}
      */
-    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     public void onDestroy() {
 
     }

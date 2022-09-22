@@ -31,7 +31,7 @@ public abstract class PaiPresenter<V extends IView> implements IPresenter<V> {
         this.intervenor = createIntervenor();
         if (this.intervenor != null) {
             //增加生命周期的介入者
-            this.pv.getLifecycle().addObserver(this.intervenor);
+            this.pv.getLifecycle().addObserver(this.intervenor.getLifecycleObserver());
         }
     }
 
@@ -62,5 +62,9 @@ public abstract class PaiPresenter<V extends IView> implements IPresenter<V> {
     public void detach() {
         this.pv = null;
         this.intervenor = null;
+        if (this.intervenor != null) {
+            //增加生命周期的介入者
+            this.pv.getLifecycle().removeObserver(this.intervenor.getLifecycleObserver());
+        }
     }
 }
