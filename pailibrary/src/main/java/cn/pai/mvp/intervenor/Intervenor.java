@@ -59,7 +59,7 @@ public class Intervenor {
      * 注：该介入函数发生在attachBindPresenter之后，layoutAfterViewBind之前执行，view和presenter已经绑定完成
      * 不使用@OnLifecycleEvent(Lifecycle.Event.ON_CREATE)是因为，lifecycle的oncreate,onstart,onresume都会在父类对应的
      * 方法执行完后才会执行，也就是presenter.start执行完后才执行
-     * Must be called from {@link android.app.Activity#onCreate(Bundle)}
+     * Must be called from
      *
      */
     public void onCreate() {
@@ -68,7 +68,7 @@ public class Intervenor {
 
     /**
      * 没焦点，不可操作，用户所见
-     * Must be called from {@link android.app.Activity#onStart()}
+     * Must be called from
      */
     public void onStart() {
 
@@ -76,7 +76,7 @@ public class Intervenor {
 
     /**
      * 有焦点，用户交互
-     * Must be called from {@link android.app.Activity#onResume()}
+     * Must be called from
      */
     public void onResume() {
 
@@ -84,7 +84,7 @@ public class Intervenor {
 
     /**
      * 已暂停，可见但不在前台，不可交互
-     * Must be called from {@link android.app.Activity#onPause()}
+     * Must be called from
      */
     public void onPause() {
 
@@ -92,7 +92,7 @@ public class Intervenor {
 
     /**
      * 停止，不可见
-     * Must be called from {@link android.app.Activity#onStop()}
+     * Must be called from
      */
     public void onStop() {
 
@@ -100,14 +100,14 @@ public class Intervenor {
 
     /**
      * 被销毁
-     * Must be called from {@link android.app.Activity#onDestroy()}
+     * Must be called from
      */
     public void onDestroy() {
 
     }
 
     /**
-     * Must be called from {@link android.app.Activity#onSaveInstanceState(Bundle)}
+     * Must be called from
      *
      * @param outState
      */
@@ -116,7 +116,7 @@ public class Intervenor {
     }
 
     /**
-     * Must be called from {@link android.app.Activity#onActivityResult(int, int, Intent)}
+     * Must be called from
      *
      * @param requestCode
      * @param resultCode

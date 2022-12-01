@@ -31,7 +31,7 @@ public class LoginActivity extends PaiActivity<ActivityLoginBinding ,LoginContra
 
     @OnClick(R.id.btnLogin)
     void onClick(View v) {
-//        p.reqLogin();
-        toActivity(ImageActivity.class,null);
+        p.reqLogin();
+//        toActivity(ImageActivity.class,null);
     }
 }
