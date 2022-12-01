@@ -135,6 +135,44 @@ public class AppUtil {
     /**
      * 安装Apk
      */
+    public static void installAPK(Context context, File apkFile) {
+        if (apkFile == null || !apkFile.exists()) {
+            return;
+        }
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+//      安装完成后，启动app（源码中少了这句话）
+
+        if (null != apkFile) {
+            try {
+                //兼容7.0
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    Uri contentUri = FileProvider.getUriForFile(context, context.getPackageName() + ".provider", apkFile);
+                    intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+                    //兼容8.0
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        boolean hasInstallPermission = context.getPackageManager().canRequestPackageInstalls();
+                        if (!hasInstallPermission) {
+                            startInstallPermissionSettingActivity(context);
+                            return;
+                        }
+                    }
+                } else {
+                    intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                }
+                if (context.getPackageManager().queryIntentActivities(intent, 0).size() > 0) {
+                    context.startActivity(intent);
+                }
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 安装Apk
+     */
     public static void installAPK(Context context, String apkPath) {
         File apkFile = new File(apkPath, AppUtil.getVersionName(context));
         if (!apkFile.exists()) {
@@ -148,7 +186,7 @@ public class AppUtil {
                 //兼容7.0
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    Uri contentUri = FileProvider.getUriForFile(context, context.getPackageName() + ".fileProvider", apkFile);
+                    Uri contentUri = FileProvider.getUriForFile(context, context.getPackageName() + ".provider", apkFile);
                     intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
                     //兼容8.0
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -176,5 +214,11 @@ public class AppUtil {
         Intent intent = new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+    }
+
+    public static PackageInfo getApkInfo(Context context, String absPath) {
+        PackageManager pm = context.getPackageManager();
+        PackageInfo pkgInfo = pm.getPackageArchiveInfo(absPath, PackageManager.GET_ACTIVITIES);
+        return pkgInfo;
     }
 }

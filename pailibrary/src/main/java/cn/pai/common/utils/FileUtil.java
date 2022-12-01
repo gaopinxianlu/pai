@@ -184,6 +184,25 @@ public class FileUtil {
     /**
      * 创建文件
      *
+     * @return
+     */
+    public static boolean createFile(File file) {
+        if (file.exists()) {
+            return true;
+        }
+        if (createDir(file.getParent())) {
+            try {
+                return file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 创建文件
+     *
      * @param path
      * @param name
      * @return

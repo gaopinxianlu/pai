@@ -29,7 +29,7 @@ import javax.net.ssl.X509TrustManager;
 public class SSLSocketHelper {
     /**
      * Android证书一般放在asset下
-     *
+     * <p>
      * 单向证书
      *
      * @param certificateInputs 证书流
@@ -50,14 +50,14 @@ public class SSLSocketHelper {
             for (int i = 0; i < certificateInputs.length; i++) {
                 // 生成一个证书对象并使用从输入流 inStream 中读取的数据对它进行初始化
                 InputStream certificateInput = null;
-                try{
+                try {
                     certificateInput = certificateInputs[i];
                     Certificate certificate = certificateFactory.generateCertificate(certificateInput);
                     // 将给定可信证书分配给给定别名
                     keystore.setCertificateEntry(Integer.toString(i++), certificate);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
-                }finally {
+                } finally {
                     if (certificateInput != null)
                         certificateInput.close();
                 }
@@ -88,10 +88,9 @@ public class SSLSocketHelper {
     }
 
     /**
-     *
-     * @param priKey 客户端私钥证书
+     * @param priKey    客户端私钥证书
      * @param priKeyPwd 客户端私钥密码
-     * @param pubKey 服务端公钥证书
+     * @param pubKey    服务端公钥证书
      * @param pubKeyPwd 服务端公钥密码
      * @return
      */
@@ -133,6 +132,7 @@ public class SSLSocketHelper {
 
     /**
      * 客户端不验服务器证书
+     *
      * @return
      */
     public static SSLSocketFactory getNoValidSSLFactory() {
@@ -159,5 +159,22 @@ public class SSLSocketHelper {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static X509TrustManager getX509TrustManager() {
+        return new X509TrustManager() {
+            @Override
+            public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+            }
+
+            @Override
+            public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+            }
+
+            @Override
+            public X509Certificate[] getAcceptedIssuers() {
+                return new X509Certificate[0];
+            }
+        };
     }
 }

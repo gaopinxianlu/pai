@@ -15,6 +15,11 @@ public abstract class FileRespCall extends RespCall<File> {
 	private String fileDirs;
 	private String fileName;
 
+	/**
+	 *
+	 * @param fileDirs 文件保存的目录
+	 * @param fileName 文件名称
+	 */
 	public FileRespCall(String fileDirs, String fileName) {
 		// TODO Auto-generated constructor stub
 		this.fileDirs = fileDirs;
@@ -31,7 +36,7 @@ public abstract class FileRespCall extends RespCall<File> {
 		if (!dir.exists()) {
 			dir.mkdirs();
 		}
-		File file = new File(fileDirs, fileName);
+		File file = new File(fileDirs, getFileName(response));
 
 		InputStream is = null;
 		FileOutputStream fos = null;
@@ -72,5 +77,14 @@ public abstract class FileRespCall extends RespCall<File> {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	/**
+	 * 最终生成的文件名，子类可重写该方法
+	 * @param response
+	 * @return
+	 */
+	protected String getFileName(Response response) {
+		return fileName;
 	}
 }

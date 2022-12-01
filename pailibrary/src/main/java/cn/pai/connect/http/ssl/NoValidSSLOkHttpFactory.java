@@ -32,7 +32,7 @@ public class NoValidSSLOkHttpFactory extends OkHttpFactory {
                 .writeTimeout(getTimeOut(), TimeUnit.MILLISECONDS)
                 .readTimeout(getTimeOut(), TimeUnit.MILLISECONDS)
                 .cache(getCache()).cookieJar(new CookieJarImpl(new CookieMemory()))
-                .sslSocketFactory(SSLSocketHelper.getNoValidSSLFactory())
+                .sslSocketFactory(SSLSocketHelper.getNoValidSSLFactory(), SSLSocketHelper.getX509TrustManager())
                 .hostnameVerifier(new HostnameVerifier() {
                     @Override
                     public boolean verify(String hostname, SSLSession session) {

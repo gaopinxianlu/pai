@@ -1,14 +1,13 @@
 package cn.sc.pai.test.login;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import butterknife.OnClick;
-import cn.pai.common.log.Loger;
 import cn.pai.mvp.view.PaiActivity;
 import cn.sc.pai.test.R;
 import cn.sc.pai.test.databinding.ActivityLoginBinding;
+import cn.sc.pai.test.image.ImageActivity;
 
 
 /**
@@ -32,6 +31,7 @@ public class LoginActivity extends PaiActivity<ActivityLoginBinding ,LoginContra
 
     @OnClick(R.id.btnLogin)
     void onClick(View v) {
-        p.reqLogin();
+//        p.reqLogin();
+        toActivity(ImageActivity.class,null);
     }
 }

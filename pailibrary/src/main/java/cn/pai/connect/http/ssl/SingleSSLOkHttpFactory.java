@@ -34,7 +34,8 @@ public abstract class SingleSSLOkHttpFactory extends OkHttpFactory {
                 .writeTimeout(getTimeOut(), TimeUnit.MILLISECONDS)
                 .readTimeout(getTimeOut(), TimeUnit.MILLISECONDS)
                 .cache(getCache()).cookieJar(new CookieJarImpl(new CookieMemory()))
-                .sslSocketFactory(SSLSocketHelper.getSingleSSLFactory(getCertificateStream(context)))
+                .sslSocketFactory(SSLSocketHelper.getSingleSSLFactory(getCertificateStream(context))
+                        , SSLSocketHelper.getX509TrustManager())
                 .hostnameVerifier(new HostnameVerifier() {
                     @Override
                     public boolean verify(String hostname, SSLSession session) {

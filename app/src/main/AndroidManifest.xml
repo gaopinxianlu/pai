@@ -20,6 +20,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".main.MainActivity" />
+        <activity android:name=".image.ImageActivity" />
     </application>
 
 </manifest>

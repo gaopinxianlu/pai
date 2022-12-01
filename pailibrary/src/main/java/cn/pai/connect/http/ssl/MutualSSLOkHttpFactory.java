@@ -36,7 +36,8 @@ public class MutualSSLOkHttpFactory extends OkHttpFactory {
                     .writeTimeout(getTimeOut(), TimeUnit.MILLISECONDS)
                     .readTimeout(getTimeOut(), TimeUnit.MILLISECONDS)
                     .cache(getCache()).cookieJar(new CookieJarImpl(new CookieMemory()))
-                    .sslSocketFactory(SSLSocketHelper.getMutualSSLFactory(priKey, "", pubKey, ""))
+                    .sslSocketFactory(SSLSocketHelper.getMutualSSLFactory(priKey, "", pubKey, "")
+                            , SSLSocketHelper.getX509TrustManager())
                     .build();
         } catch (IOException e) {
             e.printStackTrace();
